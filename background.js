@@ -86,6 +86,36 @@ function onBrowserActionClicked(tab) {
         loadingMessagePrefix: "Object History Debugger: ",
         onBeforePageLoad: function(callback) {
             this.executeScriptOnPage(`
+                function HistoryEntry(){
+                    this.lastAssignment = null;
+                    this.fullHistory = [];
+                }
+
+                HistoryEntry.prototype.prettyPrint = function(){
+
+                }
+                HistoryEntry.prototype.prettyPrintSortOf = function(){
+                    var hist = this;
+
+                    console.log("%c " + String.fromCharCode(0x25BC) + " Most recent assignment", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
+                    hist.fullHistory.forEach((assignment, i) => {
+                        console.log("[" + i + "] Set to ", assignment.value, assignment.stack[0])
+                        console.groupCollapsed("%c MORE", "font-weight: bold; font-size: 7px;color: #777")
+                        assignment.stack.forEach(function(frame){
+                            console.log(frame)
+                        })
+                        console.groupEnd()
+                    })
+                    console.log("%c " + String.fromCharCode(0x25B2) + " First assignment", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
+                }
+
+                Object.defineProperty(HistoryEntry.prototype, "clickDotsToPrettyPrintSortOf", {
+                    get: function(){
+                        this.prettyPrintSortOf()
+                        return "Printed to console"
+                    }
+                })
+
                 window.__ohdAssign = function(object, propertyName, value){
                         var propertyNameString = propertyName.toString()
                         var storagePropName = propertyNameString + "__history__";
@@ -103,32 +133,7 @@ function onBrowserActionClicked(tab) {
 
                         if (object[storagePropName] === undefined){
                             Object.defineProperty(object, storagePropName, {
-                                value: {
-                                    lastAssignment: null,
-                                    fullHistory: [],
-                                    prettyPrint: function(){
-
-                                    },
-                                    prettyPrintKinda: function(){
-                                        var hist = this;
-
-                                        console.log("%c " + String.fromCharCode(0x25BC) + " Most recent assignment", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
-                                        hist.fullHistory.forEach((assignment, i) => {
-                                            console.log("[" + i + "] Set to ", assignment.value, assignment.stack[0])
-                                            console.groupCollapsed("%c MORE", "font-weight: bold; font-size: 7px;color: #777")
-                                    		assignment.stack.forEach(function(frame){
-                                                console.log(frame)
-                                            })
-                                            console.groupEnd()
-                                        })
-                                        console.log("%c " + String.fromCharCode(0x25B2) + " First assignment", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
-
-                                    },
-                                    get clickDotsToPrettyPrintKinda(){
-                                        this.prettyPrintKinda()
-                                        return "Printed to console"
-                                    }
-                                },
+                                value: new HistoryEntry(),
                                 enumerable: false,
                                 writable: true
                             })
