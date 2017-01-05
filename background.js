@@ -90,15 +90,47 @@ function onBrowserActionClicked(tab) {
                     this.lastAssignment = null;
                     this.fullHistory = [];
                 }
-
+                HistoryEntry.prototype.clone = function(){
+                    return {
+                        fullHistory: this.fullHistory.slice().map(assignment => {
+                            return {
+                                value: assignment.value,
+                                stack: assignment.stack.slice()
+                            }
+                        })
+                    }
+                }
                 HistoryEntry.prototype.prettyPrint = function(){
+                    var fullHistory = this.clone().fullHistory;
+                    var self = this;
 
+                    var framesLeftToResolve = 0;
+
+                    fullHistory.forEach(function(assignment, assignmentIndex){
+                        assignment.stack.forEach(function(frameString, frameIndex){
+                            framesLeftToResolve++;
+
+                            codePreprocessor.resolveFrame(frameString, function(err, resolvedFrame){
+                                framesLeftToResolve--;
+
+                                fullHistory[assignmentIndex].stack[frameIndex] = resolvedFrame
+
+                                if (framesLeftToResolve===0){
+                                    console.log("done")
+                                    self._log(fullHistory)
+                                }
+                            })
+                        })
+                    })
                 }
                 HistoryEntry.prototype.prettyPrintSortOf = function(){
                     var hist = this;
 
-                    console.log("%c " + String.fromCharCode(0x25BC) + " Most recent assignment", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
-                    hist.fullHistory.forEach((assignment, i) => {
+                    this._log(hist.fullHistory)
+                }
+                HistoryEntry.prototype._log = function(fullHistory){
+                    console.log("%c " + String.fromCharCode(0x25BC) + " Most recent assignments:", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
+                    fullHistory.forEach((assignment, i) => {
                         console.log("[" + i + "] Set to ", assignment.value, assignment.stack[0])
                         console.groupCollapsed("%c MORE", "font-weight: bold; font-size: 7px;color: #777")
                         assignment.stack.forEach(function(frame){
@@ -106,9 +138,7 @@ function onBrowserActionClicked(tab) {
                         })
                         console.groupEnd()
                     })
-                    console.log("%c " + String.fromCharCode(0x25B2) + " First assignment", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
                 }
-
                 Object.defineProperty(HistoryEntry.prototype, "clickDotsToPrettyPrintSortOf", {
                     get: function(){
                         this.prettyPrintSortOf()
@@ -148,6 +178,9 @@ function onBrowserActionClicked(tab) {
                             if (frameString.indexOf("__ohd") !== -1) {
                                 return false;
                             }
+                            if (frameString.indexOf("<anonymous>:") !== -1){
+                                return false;
+                            }
                             return true;
                         })
 
@@ -156,6 +189,10 @@ function onBrowserActionClicked(tab) {
                             value: value,
                             stack
                         })
+
+                        if (object[storagePropName].fullHistory.length > 20) {
+                            object[storagePropName].fullHistory = object[storagePropName].fullHistory.slice(0, 20)
+                        }
 
                         return object[propertyName] = value
                     }
