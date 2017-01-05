@@ -103,15 +103,53 @@ function onBrowserActionClicked(tab) {
 
                         if (object[storagePropName] === undefined){
                             Object.defineProperty(object, storagePropName, {
-                                value: [],
+                                value: {
+                                    lastAssignment: null,
+                                    fullHistory: [],
+                                    prettyPrint: function(){
+
+                                    },
+                                    prettyPrintKinda: function(){
+                                        var hist = this;
+
+                                        console.log("%c " + String.fromCharCode(0x25BC) + " Most recent assignment", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
+                                        hist.fullHistory.forEach((assignment, i) => {
+                                            console.log("[" + i + "] Set to ", assignment.value, assignment.stack[0])
+                                            console.groupCollapsed("%c MORE", "font-weight: bold; font-size: 7px;color: #777")
+                                    		assignment.stack.forEach(function(frame){
+                                                console.log(frame)
+                                            })
+                                            console.groupEnd()
+                                        })
+                                        console.log("%c " + String.fromCharCode(0x25B2) + " First assignment", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
+
+                                    },
+                                    get clickDotsToPrettyPrintKinda(){
+                                        this.prettyPrintKinda()
+                                        return "Printed to console"
+                                    }
+                                },
                                 enumerable: false,
                                 writable: true
                             })
                         }
 
-                        object[storagePropName].push({
+                        Error.stackTraceLimit = 100
+                        var stack = Error().stack.split("\\n")
+                        stack = stack.filter(frameString => {
+                            if (frameString === "Error") {
+                                return false;
+                            }
+                            if (frameString.indexOf("__ohd") !== -1) {
+                                return false;
+                            }
+                            return true;
+                        })
+
+                        object[storagePropName].lastAssignment = stack[0]
+                        object[storagePropName].fullHistory.unshift({
                             value: value,
-                            stack: Error().stack
+                            stack
                         })
 
                         return object[propertyName] = value
