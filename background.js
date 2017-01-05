@@ -88,7 +88,7 @@ function onBrowserActionClicked(tab) {
             this.executeScriptOnPage(`
                 window.__ohdAssign = function(object, propertyName, value){
                         var propertyNameString = propertyName.toString()
-                        var storagePropName = propertyNameString + "_trackedName";
+                        var storagePropName = propertyNameString + "__history__";
 
                         var propertyNameType = typeof propertyName;
                         // Either Symbol() or Object(Symbol())
@@ -96,20 +96,23 @@ function onBrowserActionClicked(tab) {
                         if (!propertyNameIsSymbol) {
                             if (propertyName === null
                                 || propertyName === undefined
-                                || (propertyNameType !== "string" && !propertyName.isStringTraceString)) {
+                                || (propertyNameType !== "string")) {
                                 propertyName = propertyNameString;
                             }
                         }
 
                         if (object[storagePropName] === undefined){
                             Object.defineProperty(object, storagePropName, {
-                                value: propertyName,
+                                value: [],
                                 enumerable: false,
                                 writable: true
                             })
-                        } else {
-                            object[storagePropName] = propertyName
                         }
+
+                        object[storagePropName].push({
+                            value: value,
+                            stack: Error().stack
+                        })
 
                         return object[propertyName] = value
                     }
