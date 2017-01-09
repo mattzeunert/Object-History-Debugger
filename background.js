@@ -131,13 +131,32 @@ function onBrowserActionClicked(tab) {
                 HistoryEntry.prototype._log = function(fullHistory){
                     console.log("%c " + String.fromCharCode(0x25BC) + " Most recent assignments:", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
                     fullHistory.forEach((assignment, i) => {
-                        console.log("[" + i + "] Set to ", assignment.value, assignment.stack[0])
+                        var frame = assignment.stack[0]
+                        if (typeof frame === "string"){
+                            console.log("[" + i + "] Set to ", assignment.value, frame)
+                        } else {
+                            logFrameObject(frame)
+                            console.log("[" + i + "] Set to ", assignment.value)
+                        }
+
                         console.groupCollapsed("%c MORE", "font-weight: bold; font-size: 7px;color: #777")
                         assignment.stack.forEach(function(frame){
-                            console.log(frame)
+                            if (typeof frame === "string") {
+                                console.log(frame)
+                            } else if (typeof frame === "object") {
+                                logFrameObject(frame)
+                            }
                         })
                         console.groupEnd()
                     })
+
+                    function logFrameObject(frame){
+                        var path = frame.fileName.replace(".dontprocess", "")
+                        var parts = path.split("/")
+                        var fileName = parts[parts.length - 1]
+                        console.log("Original location:", fileName + ":" + frame.lineNumber + ":" + frame.columnNumber)
+                        console.log(frame.line)
+                    }
                 }
                 Object.defineProperty(HistoryEntry.prototype, "clickDotsToPrettyPrintSortOf", {
                     get: function(){
