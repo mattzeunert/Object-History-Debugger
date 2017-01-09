@@ -56,6 +56,17 @@ window.babelPlugin = function(babel) {
                     return
                 }
 
+                if (["+=", "-=", "/=", "*="].indexOf(path.node.operator) !== -1){
+                    // I don't think this replacement is always going to be 100% equivalent
+                    // to the +=/... operation, but it's close enough for now
+                    // e.g. maybe there'd be props if path.node.left is sth like a.sth().aa would
+                    // call sth twice
+                    var operator = {"+=": "+", "-=": "-", "/=": "/", "*=": "*"}[path.node.operator]
+                    var value = babel.types.binaryExpression(operator, path.node.left, path.node.right)
+                    var replacement = babel.types.assignmentExpression("=", path.node.left, value)
+                    path.replaceWith(replacement)
+                }
+
                 if (path.node.operator === "=" && path.node.left.type === "MemberExpression") {
                     var property;
                     if (path.node.left.computed === true) {
