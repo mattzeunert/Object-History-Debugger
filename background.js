@@ -86,9 +86,10 @@ function onBrowserActionClicked(tab) {
         loadingMessagePrefix: "Object History Debugger: ",
         onBeforePageLoad: function(callback) {
             this.executeScriptOnPage(`
-                function HistoryEntry(){
+                function HistoryEntry(propertyName){
                     this.lastAssignment = null;
                     this.fullHistory = [];
+                    this.propertyName = propertyName
                 }
                 HistoryEntry.prototype.clone = function(){
                     return {
@@ -129,14 +130,14 @@ function onBrowserActionClicked(tab) {
                     this._log(hist.fullHistory)
                 }
                 HistoryEntry.prototype._log = function(fullHistory){
-                    console.log("%c " + String.fromCharCode(0x25BC) + " Most recent assignments:", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
+                    console.log("%c " + String.fromCharCode(0x25BC) + " Most recent '" + this.propertyName + "' assignments:", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
                     fullHistory.forEach((assignment, i) => {
                         var frame = assignment.stack[0]
                         if (typeof frame === "string"){
                             console.log("[" + i + "] Set to ", assignment.value, frame)
                         } else {
-                            logFrameObject(frame)
                             console.log("[" + i + "] Set to ", assignment.value)
+                            logFrameObject(frame, false)
                         }
 
                         console.groupCollapsed("%c MORE", "font-weight: bold; font-size: 7px;color: #777")
@@ -144,18 +145,30 @@ function onBrowserActionClicked(tab) {
                             if (typeof frame === "string") {
                                 console.log(frame)
                             } else if (typeof frame === "object") {
-                                logFrameObject(frame)
+                                logFrameObject(frame, true)
                             }
                         })
                         console.groupEnd()
                     })
 
-                    function logFrameObject(frame){
+                    function logFrameObject(frame, isDetailed){
                         var path = frame.fileName.replace(".dontprocess", "")
                         var parts = path.split("/")
                         var fileName = parts[parts.length - 1]
                         console.log("Original location:", fileName + ":" + frame.lineNumber + ":" + frame.columnNumber)
-                        console.log(frame.line)
+                        if (isDetailed){
+                            var previousLine = frame.prevLines[frame.prevLines.length - 1]
+                            var nextLine = frame.nextLines[0]
+                            if (previousLine){
+                                console.log("###", previousLine)
+                            }
+                            console.log(">>>", frame.line)
+                            if (nextLine) {
+                                console.log("###", nextLine)
+                            }
+                        } else {
+                            console.log(frame.line)
+                        }
                     }
                 }
                 Object.defineProperty(HistoryEntry.prototype, "clickDotsToPrettyPrintSortOf", {
@@ -182,7 +195,7 @@ function onBrowserActionClicked(tab) {
 
                         if (object[storagePropName] === undefined){
                             Object.defineProperty(object, storagePropName, {
-                                value: new HistoryEntry(),
+                                value: new HistoryEntry(propertyNameString),
                                 enumerable: false,
                                 writable: true
                             })
