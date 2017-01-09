@@ -118,7 +118,6 @@ Object.getOwnPropertyDescriptors = function(){
 
 window.__ohdAssign = function(object, propertyName, value){
     var propertyNameString = propertyName.toString()
-    var storagePropName = propertyNameString + "__history__";
 
     var propertyNameType = typeof propertyName;
     // Either Symbol() or Object(Symbol())
@@ -130,6 +129,15 @@ window.__ohdAssign = function(object, propertyName, value){
             propertyName = propertyNameString;
         }
     }
+
+    addHistoryEntry(object, propertyName, value)
+
+    return object[propertyName] = value
+}
+
+function addHistoryEntry(object, propertyName, value){
+    var propertyNameString = propertyName.toString();
+    var storagePropName = propertyNameString + "__history__";
 
     if (object[storagePropName] === undefined){
         Object.defineProperty(object, storagePropName, {
@@ -156,15 +164,13 @@ window.__ohdAssign = function(object, propertyName, value){
 
     object[storagePropName].lastAssignment = stack[0]
     object[storagePropName].fullHistory.unshift({
-        value: value,
-        stack
+        stack,
+        value
     })
 
     if (object[storagePropName].fullHistory.length > 20) {
         object[storagePropName].fullHistory = object[storagePropName].fullHistory.slice(0, 20)
     }
-
-    return object[propertyName] = value
 }
 
 window.__ohdMakeObject = function(properties){
@@ -191,4 +197,9 @@ window.__ohdMakeObject = function(properties){
     }
     Object.defineProperties(obj, methodProperties)
     return obj
+}
+
+window.__ohdDeleteProperty = function(object, propertyName){
+    addHistoryEntry(object, propertyName, undefined)
+    return delete object[propertyName]
 }

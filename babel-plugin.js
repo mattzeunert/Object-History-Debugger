@@ -75,6 +75,22 @@ window.babelPlugin = function(babel) {
                     path.replaceWith(assignExpression)
                 }
             },
+            UnaryExpression(path) {
+                if (path.node.operator === "delete"){
+                    var prop = path.node.argument.property
+                    if (prop.type === "Identifier"){
+                         prop = babel.types.stringLiteral(prop.name)
+                    }
+                    var call = babel.types.callExpression(
+                    	babel.types.identifier("__ohdDeleteProperty"),
+                        [
+                            path.node.argument.object,
+                            prop
+                        ]
+                    )
+                    path.replaceWith(call)
+                }
+            }
         }
     }
 }
