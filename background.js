@@ -130,7 +130,7 @@ function onBrowserActionClicked(tab) {
                     this._log(hist.fullHistory)
                 }
                 HistoryEntry.prototype._log = function(fullHistory){
-                    console.log("%c " + String.fromCharCode(0x25BC) + " Most recent '" + this.propertyName + "' assignments:", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
+                    console.group("%c Most recent '" + this.propertyName + "' assignments:", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
                     fullHistory.forEach((assignment, i) => {
                         var frame = assignment.stack[0]
                         if (typeof frame === "string"){
@@ -150,6 +150,7 @@ function onBrowserActionClicked(tab) {
                         })
                         console.groupEnd()
                     })
+                    console.groupEnd()
 
                     function logFrameObject(frame, isDetailed){
                         var path = frame.fileName.replace(".dontprocess", "")
