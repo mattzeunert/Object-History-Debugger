@@ -92,6 +92,31 @@ Object.defineProperty(HistoryEntry.prototype, "clickDotsToPrettyPrintSortOf", {
     }
 })
 
+
+var nativeObjectGetOwnPropertyNames = Object.getOwnPropertyNames
+Object.getOwnPropertyNames = function(){
+    var names = nativeObjectGetOwnPropertyNames.apply(this, arguments)
+    return names.filter(removeHistoryPropertyNames)
+
+    function removeHistoryPropertyNames(name){
+        return name.indexOf("__history__") === -1
+    }
+}
+
+var nativeObjectGetOwnPropertyDescriptors = Object.getOwnPropertyDescriptors
+Object.getOwnPropertyDescriptors = function(){
+    var descriptors = nativeObjectGetOwnPropertyDescriptors.apply(this, arguments)
+    var ret = {}
+    for (key in descriptors) {
+        if (key.indexOf("__history__") === -1) {
+            ret[key] = descriptors[key]
+        }
+    }
+
+    return ret
+}
+
+
 window.__ohdAssign = function(object, propertyName, value){
     var propertyNameString = propertyName.toString()
     var storagePropName = propertyNameString + "__history__";
