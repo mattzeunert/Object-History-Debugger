@@ -19,7 +19,6 @@ HistoryEntry.prototype.prettyPrint = function(){
 
     var framesLeftToResolve = 0;
 
-    debugger
     fullHistory.forEach(function(assignment, assignmentIndex){
         assignment.stack.forEach(function(frameString, frameIndex){
             framesLeftToResolve++;
