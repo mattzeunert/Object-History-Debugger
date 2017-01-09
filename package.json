@@ -1,0 +1,24 @@
+{
+  "name": "object-history-debugger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ChromeCodeInstrumenter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattzeunert/object-history-debugger.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattzeunert/object-history-debugger/issues"
+  },
+  "homepage": "https://github.com/mattzeunert/object-history-debugger#readme",
+  "devDependencies": {
+    "jasmine-core": "^2.5.2",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0"
+  }
+}
