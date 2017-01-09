@@ -16,7 +16,10 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       '**/ohd.js',
-      '**/ohd.spec.js'
+      '**/ohd.spec.js',
+      '**/babel-plugin.js',
+      '**/babel-plugin.spec.js',
+      '**/node_modules/babel-standalone/babel.js'
     ],
 
 
