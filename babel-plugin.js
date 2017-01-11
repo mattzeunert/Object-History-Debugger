@@ -1,4 +1,4 @@
-window.babelPlugin = function(babel) {
+module.exports = function(babel) {
     return {
         visitor: {
             ObjectExpression(path) {

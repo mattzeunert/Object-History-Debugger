@@ -1,3 +1,4 @@
+
 function HistoryEntry(propertyName){
     this.lastAssignment = null;
     this.fullHistory = [];
@@ -177,6 +178,9 @@ function addHistoryEntry(object, propertyName, value){
             return false;
         }
         if (frameString.indexOf("<anonymous>:") !== -1){
+            return false;
+        }
+        if (frameString.indexOf("/ohd.js") !== -1) {
             return false;
         }
         return true;
