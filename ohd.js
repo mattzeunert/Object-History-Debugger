@@ -14,6 +14,8 @@ HistoryEntry.prototype.clone = function(){
     }
 }
 HistoryEntry.prototype.prettyPrint = function(){
+    console.info("Pretty print is asynchronous, so if you're paused in the debugger you first need to continue execution.")
+
     var fullHistory = this.clone().fullHistory;
     var self = this;
 
@@ -36,8 +38,10 @@ HistoryEntry.prototype.prettyPrint = function(){
         })
     })
 }
-HistoryEntry.prototype.prettyPrintSortOf = function(){
+HistoryEntry.prototype.prettyPrintSynchronously = function(){
     var hist = this;
+
+    console.info("Pretty print synchronously will display history right away, but it won't apply source maps to show your original code.")
 
     this._log(hist.fullHistory)
 }
@@ -84,10 +88,16 @@ HistoryEntry.prototype._log = function(fullHistory){
         }
     }
 }
-Object.defineProperty(HistoryEntry.prototype, "clickDotsToPrettyPrintSortOf", {
+Object.defineProperty(HistoryEntry.prototype, "clickDotsToPrettyPrintSynchronously", {
     get: function(){
-        this.prettyPrintSortOf()
+        this.prettyPrintSynchronously()
         return "Printed to console"
+    }
+})
+Object.defineProperty(HistoryEntry.prototype, "clickDotsToPrettyPrint", {
+    get: function(){
+        this.prettyPrint()
+        return "See console, note pretty print is asynchronous"
     }
 })
 
