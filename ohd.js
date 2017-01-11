@@ -94,8 +94,18 @@ Object.defineProperty(HistoryEntry.prototype, "clickDotsToPrettyPrintSortOf", {
 
 var nativeObjectGetOwnPropertyNames = Object.getOwnPropertyNames
 Object.getOwnPropertyNames = function(){
+    // If DevTools calls it we want to show all names because
+    // the __history__ properties should be visible to developer
+    // We are checking stack to do that... works but possibly slow
+    // and could break in future if DevTools/Chrome code changes
+    var calledFromDevTools = Error().stack.indexOf("Function.Object.getOwnPropertyNames") !== -1
+
     var names = nativeObjectGetOwnPropertyNames.apply(this, arguments)
-    return names.filter(removeHistoryPropertyNames)
+    if (calledFromDevTools) {
+        return names
+    } else {
+        return names.filter(removeHistoryPropertyNames)
+    }
 
     function removeHistoryPropertyNames(name){
         return name.indexOf("__history__") === -1
