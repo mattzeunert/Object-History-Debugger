@@ -8,12 +8,6 @@ module.exports = function(babel) {
                       var keyLoc = prop.key.loc
                       prop.key = babel.types.stringLiteral(prop.key.name)
                       prop.key.loc = keyLoc
-                      // move start a bit to left to compensate for there not
-                      // being quotes in the original "string", since
-                      // it's just an identifier
-                      if (prop.key.loc.start.column > 0) {
-                          prop.key.loc.start.column--;
-                      }
                   }
                 })
 
