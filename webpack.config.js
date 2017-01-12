@@ -1,9 +1,10 @@
 module.exports = {
     entry: "./ohd-with-babel.js",
     output: {
-        path: "./dist",
-        filename: "ohd.js"
+        path: "./",
+        filename: "index.js"
     },
+    devtool: "eval",
     module: {
         loaders: [
             {

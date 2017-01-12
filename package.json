@@ -2,7 +2,7 @@
   "name": "object-history-debugger",
   "version": "1.0.0",
   "description": "",
-  "main": "ChromeCodeInstrumenter.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,7 +27,5 @@
     "karma-jasmine": "^1.1.0",
     "webpack": "^1.14.0"
   },
-  "dependencies": {
-    
-  }
+  "dependencies": {}
 }

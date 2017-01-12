@@ -20,3 +20,5 @@ TODO: explain how to install
 #### Tracking only specific objects to save memory
 
 TODO
+
+#### (Maybe mention including it as separate file rather than as import, better for perf of devtools/source maps)
