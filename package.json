@@ -1,6 +1,6 @@
 {
   "name": "object-history-debugger",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "See where the properties of an object were assigned and what their past values were.",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,7 @@
   "bugs": {
     "url": "https://github.com/mattzeunert/object-history-debugger/issues"
   },
+  "keywords": ["debugging", "object", "history", "debugger", "babel", "dynamic analysis"],
   "homepage": "https://github.com/mattzeunert/object-history-debugger#readme",
   "devDependencies": {
     "babel-cli": "^6.18.0",
