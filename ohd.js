@@ -1,6 +1,5 @@
 
 function HistoryEntry(propertyName){
-    this.lastAssignment = null;
     this.fullHistory = [];
     this.propertyName = propertyName
 }
@@ -190,7 +189,6 @@ function addHistoryEntry(object, propertyName, value){
         return true;
     })
 
-    object[storagePropName].lastAssignment = stack[0]
     object[storagePropName].fullHistory.unshift({
         stack,
         value
