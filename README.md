@@ -16,7 +16,7 @@ Pretty print shows you the original source code you wrote. Because it's asynchro
 
 To see the history without having to resume execution call `prettyPrintSynchronously`.
 
-### Chrome extension: easy but flaky
+### Chrome extension: easy setup, but flaky
 
 [Install the Chrome extension](https://chrome.google.com/webstore/detail/object-history-debugger/hmnmphiibikkcahffmpkadbibhokagho/related) then click the icon next to the URL bar to reload the current page with object tracking enabled.
 
