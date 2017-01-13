@@ -28,9 +28,20 @@ TODO: link to an example that can be easily inspected with the chrome extension
 
 1. `npm install object-history-debugger`
 2. Add `object-history-debugger/babel-plugin` to your Babel plugins, e.g. in .babelrc
-3. Put `import "object-history-debugger"` before any of your own JS code.
-4. Build your project and load it as usual.
+3. Put `import ohd from "object-history-debugger"` before any of your own JS code.
+4. Build your project and load it as usual. Objects now have __history__ values for each property.
+
+Pretty printing the history currently only works in Chrome.
 
 #### Tracking only specific objects to save memory
 
-TODO
+Tracking all past property values can use up a lot of memory. Chrome can't garbage collect values if they are still referenced in a `__history__` value.
+
+To only track assignments on certain objects set `trackAllObjects` to false:
+
+    import ohd from "object-history-debugger"
+    ohd.trackAllObjects = false;
+
+Then, to track assignments on `obj`:
+
+    ohd.trackObject(obj)
