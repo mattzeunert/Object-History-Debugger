@@ -4,7 +4,7 @@
   "description": "See where the properties of an object were assigned and what their past values were.",
   "main": "index.js",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start --single-run"
   },
   "repository": {
     "type": "git",
