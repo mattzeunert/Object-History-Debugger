@@ -1,7 +1,7 @@
 {
   "name": "object-history-debugger",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.2.1",
+  "description": "See where the properties of an object were assigned and what their past values were.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/mattzeunert/object-history-debugger.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Matt Zeunert",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mattzeunert/object-history-debugger/issues"
   },
