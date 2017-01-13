@@ -1,6 +1,6 @@
 {
   "name": "object-history-debugger",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "See where the properties of an object were assigned and what their past values were.",
   "main": "index.js",
   "scripts": {
