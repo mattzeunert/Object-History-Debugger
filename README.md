@@ -1,4 +1,4 @@
-# Object History Debugger
+# Object History Debugger [![CircleCI](https://circleci.com/gh/mattzeunert/Object-History-Debugger.svg?style=svg)](https://circleci.com/gh/mattzeunert/Object-History-Debugger)
 
 See where an object's property values were assigned, plus a history of past values.
 
