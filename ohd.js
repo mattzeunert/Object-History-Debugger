@@ -109,7 +109,9 @@ Object.getOwnPropertyNames = function(){
     // the __history__ properties should be visible to developer
     // We are checking stack to do that... works but possibly slow
     // and could break in future if DevTools/Chrome code changes
-    var calledFromDevTools = Error().stack.indexOf("Function.Object.getOwnPropertyNames") !== -1
+    var stack = Error().stack
+    var calledFromDevTools = stack.indexOf("_propertyDescriptors.next") !== -1 &&
+        stack.indexOf("InjectedScript") !== -1
 
     var names = nativeObjectGetOwnPropertyNames.apply(this, arguments)
     if (calledFromDevTools) {

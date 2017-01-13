@@ -30,13 +30,14 @@ describe("Object History Debugger", function(){
         var names = Object.getOwnPropertyNames(obj);
         var namesInWithHistory = Object.getOwnPropertyNames(objWithHistory);
 
-        expect(names).toEqual(namesInWithHistory)
+
+        expect(namesInWithHistory).toEqual(names)
     })
 
     it("Behaves like a normal object when getting Object.getOwnPropertyDescriptors", function(){
         var descriptors = Object.getOwnPropertyDescriptors(obj);
         var descriptorsInWithHistory = Object.getOwnPropertyDescriptors(objWithHistory);
 
-        expect(Object.keys(descriptors)).toEqual(Object.keys(descriptorsInWithHistory))
+        expect(Object.keys(descriptorsInWithHistory)).toEqual(Object.keys(descriptors))
     })
 })
