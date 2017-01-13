@@ -2,7 +2,9 @@ module.exports = {
     entry: "./ohd-with-babel.js",
     output: {
         path: "./",
-        filename: "index.js"
+        filename: "index.js",
+        library: "objectHistoryDebugger",
+        libraryTarget: "commonjs2"
     },
     devtool: "eval",
     module: {
@@ -13,8 +15,5 @@ module.exports = {
                 loader: "babel"
             }
         ]
-    },
-    node: {
-        global: false
     }
 };
