@@ -251,7 +251,7 @@ var objectHistoryDebugger = {
         return this._specificallyTrackedObjects.indexOf(obj) !== -1
     }
 }
-eval(`console.log("IN OHD")`)
+
 window.objectHistoryDebugger = objectHistoryDebugger
 
 if (typeof module !== "undefined"){
