@@ -1,4 +1,4 @@
-module.exports = function(babel) {
+var plugin = function(babel) {
     return {
         visitor: {
             ObjectExpression(path) {
@@ -98,4 +98,10 @@ module.exports = function(babel) {
             }
         }
     }
+}
+
+if (typeof module === "undefined"){
+    window.babelPlugin = plugin;
+} else {
+    module.exports = plugin
 }
