@@ -140,20 +140,22 @@ Object.getOwnPropertyDescriptors = function(){
 
 
 window.__ohdAssign = function(object, propertyName, value){
-    var propertyNameString = propertyName.toString()
+    if (objectHistoryDebugger._isTrackingObject(object)) {
+        var propertyNameString = propertyName.toString()
 
-    var propertyNameType = typeof propertyName;
-    // Either Symbol() or Object(Symbol())
-    var propertyNameIsSymbol = propertyNameType === "symbol" || propertyNameString === "Symbol()"
-    if (!propertyNameIsSymbol) {
-        if (propertyName === null
-            || propertyName === undefined
-            || (propertyNameType !== "string")) {
-            propertyName = propertyNameString;
+        var propertyNameType = typeof propertyName;
+        // Either Symbol() or Object(Symbol())
+        var propertyNameIsSymbol = propertyNameType === "symbol" || propertyNameString === "Symbol()"
+        if (!propertyNameIsSymbol) {
+            if (propertyName === null
+                || propertyName === undefined
+                || (propertyNameType !== "string")) {
+                propertyName = propertyNameString;
+            }
         }
-    }
 
-    addHistoryEntry(object, propertyName, value)
+        addHistoryEntry(object, propertyName, value)
+    }
 
     return object[propertyName] = value
 }
@@ -228,4 +230,30 @@ window.__ohdMakeObject = function(properties){
 window.__ohdDeleteProperty = function(object, propertyName){
     addHistoryEntry(object, propertyName, undefined)
     return delete object[propertyName]
+}
+
+var objectHistoryDebugger = {
+    trackAllObjects: true,
+    _specificallyTrackedObjects: [],
+    trackObject(obj){
+        this._specificallyTrackedObjects.push(obj)
+    },
+    untrackObject(objToUntrack){
+        this._specificallyTrackedObjects = this._specificallyTrackedObjects.filter(function(obj){
+            return obj !== objToUntrack
+        })
+    },
+    _isTrackingObject: function(obj){
+        if (this.trackAllObjects) {
+            return true;
+        }
+
+        return this._specificallyTrackedObjects.indexOf(obj) !== -1
+    }
+}
+eval(`console.log("IN OHD")`)
+window.objectHistoryDebugger = objectHistoryDebugger
+
+if (typeof module !== "undefined"){
+    module.exports = window.objectHistoryDebugger;
 }
