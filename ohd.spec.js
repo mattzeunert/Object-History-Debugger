@@ -40,4 +40,48 @@ describe("Object History Debugger", function(){
 
         expect(Object.keys(descriptorsInWithHistory)).toEqual(Object.keys(descriptors))
     })
+
+    describe("__ohdAssign", function(){
+        it("Doesn't track assignments if trackAllObjects is disabled", function(){
+            objectHistoryDebugger.trackAllObjects = false
+            var o = {};
+            __ohdAssign(o, "prop", 55)
+            expect(o.prop__history__).toBe(undefined)
+            expect(o.prop).toBe(55)
+        })
+
+        it("Tracks assignment if trackAllObjects is disabled but the specific object is tracked", function(){
+            objectHistoryDebugger.trackAllObjects = false
+            var o = {};
+            objectHistoryDebugger.trackObject(o)
+            __ohdAssign(o, "prop", 55)
+            expect(typeof o.prop__history__).toBe("object")
+            expect(o.prop).toBe(55)
+        })
+
+        it("Stops tracking objects when untrackObject is called", function(){
+            objectHistoryDebugger.trackAllObjects = false
+            var o = {};
+            objectHistoryDebugger.trackObject(o)
+            objectHistoryDebugger.untrackObject(o)
+            __ohdAssign(o, "prop", 55)
+            expect(typeof o.prop__history__).toBe("undefined")
+            expect(o.prop).toBe(55)
+        })
+
+        it("Can correctly decide whether or not to track when multiple objects are involved", function(){
+            objectHistoryDebugger.trackAllObjects = false
+            var o1 = {};
+            var o2 = {}
+            objectHistoryDebugger.trackObject(o1)
+            objectHistoryDebugger.trackObject(o2)
+            objectHistoryDebugger.untrackObject(o1)
+            __ohdAssign(o1, "prop", 22)
+            __ohdAssign(o2, "prop", 33)
+            expect(typeof o1.prop__history__).toBe("undefined")
+            expect(typeof o2.prop__history__).toBe("object")
+        })
+    })
+
+
 })
