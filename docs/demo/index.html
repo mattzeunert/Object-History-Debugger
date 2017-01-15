@@ -1,0 +1,51 @@
+<!doctype>
+<html>
+    <head>
+        <title>Object History Debugger: Chrome Extension Demo</title>
+    </head>
+    <body>
+        <style>
+            .container {
+                max-width: 1024px;
+                margin: auto;
+            }
+            body {
+                font-family: Myriad Pro, Arial;
+            }
+            a {
+                color: #171596;
+            }
+            #output {
+                font-size: 50px;
+                margin-bottom: 0;
+            }
+            input, button, label {
+                font-size: 16px;
+                padding: 10px;
+            }
+            button {
+
+            }
+        </style>
+
+        <div class="container">
+            <h1 style="font-size: 16px;">
+                <a href="https://github.com/mattzeunert/Object-History-Debugger">Object History Debugger</a>:
+                Chrome Extension Demo
+            </h1>
+            <div style="background: #aee1fa; padding: 20px;">
+                <input type="text" value="" id="txt-message"/>
+                <button style="padding-top: 12px;padding-bottom: 12px;" id="btn-to-uppercase">
+                    Convert to upper case
+                </button>
+                <label style="font-weight: bold">
+                    <input type="checkbox" id="chk-bold"></input>
+                    Bold
+                </label>
+                <h2 id="output"></h2>
+            </div>
+        </div>
+
+        <script src="app.js"></script>
+    </body>
+</html>
