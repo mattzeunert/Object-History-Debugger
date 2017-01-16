@@ -29,9 +29,11 @@
         output.style.fontWeight = message.bold ? "bold" : "normal"
 
         var html = `
-            <table border="1">
+            <table>
                 <tr>
-
+                    <th>Inspect window.message!</th>
+                    <th>message.text</th>
+                    <th>message.bold</th>
                 </tr>
                 <tr>
                     <td>Value</td>
@@ -65,9 +67,6 @@
                 </tr>
             </table>
 
-            <p>
-                TODOOOOO: explain why synchronously or not
-            </p>
         `
 
         messageObjectInfo.innerHTML = html;

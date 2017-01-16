@@ -19,12 +19,39 @@
                 font-size: 50px;
                 margin-bottom: 0;
             }
-            input, button, label {
+            input, #btn-to-uppercase, label {
                 font-size: 16px;
                 padding: 10px;
             }
             button {
 
+            }
+            #btn-to-uppercase {
+                border: none;
+                background: #777;
+                color: white;
+                cursor: pointer;
+                width: 230px;
+            }
+            #btn-to-uppercase:hover {
+                background: #555;
+                text-transform: uppercase;
+            }
+
+            #message-object-info table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            #message-object-info th {
+                text-align: left;
+            }
+            #message-object-info td {
+                padding: 4px;
+                line-height: 24px;
+                border: 1px solid #ddd;
+            }
+            #message-object-info td:first-child {
+                opacity: .8
             }
         </style>
 
@@ -45,22 +72,25 @@
                 <h2 id="output"></h2>
             </div>
             <div>
-                Inspect window.message!
+                <br>
                 <div id="message-object-info">
 
                 </div>
-
-
+                <h3>
+                    prettyPrint vs prettyPrintSynchronously
+                </h3>
+                <p>
+                    The Object History Debugger (OHD) modifies the page source code, so the locations captured
+                    refer to the modified source code. When calling pretty print OHD uses source maps to determine the original source location.
+                </p>
+                <p>
+                    However, determining the original location is an asynchronous action. So if you're
+                    using OHD to debug your app and you've paused execution OHD won't be able to display
+                    the source mapped location until you've resumed execution. Use prettyPrintSynchronously to
+                    be able to see the property history right away.
+                </p>
             </div>
         </div>
-
-
-        todo:
-        - run babel on app.js
-        - make button prettier
-
-
-        buttons for pretty print?
 
         <script>window.global = {}</script>
         <script src="dist/ohd.js" charset="utf-8"></script>
