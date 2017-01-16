@@ -7,7 +7,7 @@
 
     window.message = { text: "Hello World!", bold: false };
 
-    txtMessage.addEventListener("keydown", function(){
+    txtMessage.addEventListener("keyup", function(){
         message.text = txtMessage.value;
         updateUI();
     })
