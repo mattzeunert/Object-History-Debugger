@@ -4,7 +4,8 @@
   "description": "See where the properties of an object were assigned and what their past values were.",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "karma start --single-run",
+    "demo": "cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch"
   },
   "repository": {
     "type": "git",
@@ -15,7 +16,14 @@
   "bugs": {
     "url": "https://github.com/mattzeunert/object-history-debugger/issues"
   },
-  "keywords": ["debugging", "object", "history", "debugger", "babel", "dynamic analysis"],
+  "keywords": [
+    "debugging",
+    "object",
+    "history",
+    "debugger",
+    "babel",
+    "dynamic analysis"
+  ],
   "homepage": "https://github.com/mattzeunert/object-history-debugger#readme",
   "devDependencies": {
     "babel-cli": "^6.18.0",
