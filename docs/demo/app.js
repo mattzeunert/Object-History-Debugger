@@ -90,6 +90,7 @@
 
             var ret = isDist ? "dist/" : ""
             ret += parts[parts.length - 1]
+            ret.replace(")", "") // from end of a call frame string
 
             return ret
         }
