@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start --single-run",
-    "demo": "cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch"
+    "demo": "cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch --source-maps"
   },
   "repository": {
     "type": "git",
