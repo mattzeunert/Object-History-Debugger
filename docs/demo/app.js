@@ -70,7 +70,6 @@
                     <td onClick="message.bold__history__.prettyPrint()"><button>Call .prettyPrint</button></td>
                     <td onClick="message.bold__history__.prettyPrint()"><button>Call .prettyPrint</button></td>
                 </tr>
-                ${message.bold__history__.fullHistory[0].stack.join("<br>")}
             </table>
 
         `
