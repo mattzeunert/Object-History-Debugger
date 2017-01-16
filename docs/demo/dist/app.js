@@ -7,6 +7,11 @@
     var output = document.querySelector("#output");
     var messageObjectInfo = document.querySelector("#message-object-info");
 
+    var isMobile = navigator.userAgent.match(/iPhone|iPad|IEMobile|Android/);
+    var isChrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase());
+    var isFirefox = /firefox/.test(navigator.userAgent.toLowerCase());
+    var isDesktopChrome = !isMobile && isChrome;
+
     __ohdAssign(window, "message", __ohdMakeObject([["ObjectProperty", "text", "Hello World!"], ["ObjectProperty", "bold", false]]));
 
     txtMessage.addEventListener("keyup", function () {
@@ -38,6 +43,11 @@
         updateLastLocationSourcemapped(message.bold__history__, "#last-change-bold");
 
         function updateLastLocationSourcemapped(history, selector) {
+            if (isMobile || !isChrome && !isFirefox) {
+                __ohdAssign(document.querySelector(selector), "innerHTML", "Currently Desktop Firefox/Chrome-only");
+                return;
+            }
+
             __ohdAssign(document.querySelector(selector), "textContent", "");
             codePreprocessor.resolveFrame(history.fullHistory[0].stack[0], function (err, frame) {
                 // artificial delay to show it's asynchronous

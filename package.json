@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start --single-run",
-    "demo": "cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch --source-maps"
+    "demo": "echo \"####### Make sure Webpack is also running!\";cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch --source-maps",
+    "webpack": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,8 @@
     "jasmine-core": "^2.5.2",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "webpack-shell-plugin": "^0.5.0"
   },
   "dependencies": {}
 }

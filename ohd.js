@@ -19,6 +19,9 @@
         }
     }
 
+    var isMobile = navigator.userAgent.match(/iPhone|iPad|IEMobile|Android/)
+    var isChrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase());
+
     function PropertyHistory(propertyName){
         Object.defineProperties(this, {
             propertyName: {
@@ -74,7 +77,13 @@
         this._log(hist.fullHistory)
     }
     PropertyHistory.prototype._log = function(fullHistory){
-        console.group("%c Most recent '" + this.propertyName + "' assignments:", "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
+        var mostRecentAssignmentsMessage = "Most recent '" + this.propertyName + "' assignments:"
+        if (isDesktopChrome){
+            console.group("%c " + mostRecentAssignmentsMessage, "color: red; text-transform: uppercase; font-weight: bold; font-size: 10px")
+        } else {
+            console.log(String.fromCharCode(0x25BC) + " " + mostRecentAssignmentsMessage)
+        }
+
         fullHistory.forEach((assignment, i) => {
             var frame = assignment.stack[0]
             if (typeof frame === "string"){
@@ -84,17 +93,21 @@
                 logFrameObject(frame, false)
             }
 
-            console.groupCollapsed("%c MORE", "font-weight: bold; font-size: 7px;color: #777")
-            assignment.stack.forEach(function(frame){
-                if (typeof frame === "string") {
-                    console.log(frame)
-                } else if (typeof frame === "object") {
-                    logFrameObject(frame, true)
-                }
-            })
-            console.groupEnd()
+            if (isDesktopChrome){
+                console.groupCollapsed("%c MORE", "font-weight: bold; font-size: 7px;color: #777")
+                assignment.stack.forEach(function(frame){
+                    if (typeof frame === "string") {
+                        console.log(frame)
+                    } else if (typeof frame === "object") {
+                        logFrameObject(frame, true)
+                    }
+                })
+                console.groupEnd()
+            }
         })
-        console.groupEnd()
+        if (isDesktopChrome) {
+            console.groupEnd()
+        }
 
         function logFrameObject(frame, isDetailed){
             var path = frame.fileName.replace(".dontprocess", "")
