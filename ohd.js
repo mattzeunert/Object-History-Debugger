@@ -21,6 +21,9 @@
 
     var isMobile = navigator.userAgent.match(/iPhone|iPad|IEMobile|Android/)
     var isChrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase());
+    var isFirefox = /firefox/.test(navigator.userAgent.toLowerCase());
+    var isDesktopChrome = !isMobile && isChrome
+    var canPrettyPrint = !isMobile && (isChrome || isFirefox)
 
     function PropertyHistory(propertyName){
         Object.defineProperties(this, {
@@ -45,6 +48,10 @@
         }
     }
     PropertyHistory.prototype.prettyPrint = function(){
+        if (!canPrettyPrint) {
+            console.error("Pretty print only works in Chrome and Firefox")
+            return;
+        }
         console.info("Pretty print is asynchronous, so if you're paused in the debugger you first need to continue execution.")
 
         var fullHistory = this.clone().fullHistory;
