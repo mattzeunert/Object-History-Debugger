@@ -2,7 +2,7 @@
   "name": "object-history-debugger",
   "version": "0.2.3",
   "description": "See where the properties of an object were assigned and what their past values were.",
-  "main": "index.js",
+  "main": "dist/ohd.js",
   "scripts": {
     "test": "karma start --single-run",
     "demo": "echo \"####### Make sure Webpack is also running!\";cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch --source-maps",

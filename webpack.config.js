@@ -3,8 +3,8 @@ var WebpackShellPlugin = require("webpack-shell-plugin")
 module.exports = {
     entry: "./ohd-with-babel.js",
     output: {
-        path: "./",
-        filename: "index.js",
+        path: "./dist/",
+        filename: "ohd.js",
         library: "objectHistoryDebugger",
         libraryTarget: "umd"
     },
@@ -21,7 +21,7 @@ module.exports = {
     plugins: [
         new WebpackShellPlugin({
             onBuildExit: [
-                `cp index.js docs/demo/dist/ohd.js`,
+                `cp dist/ohd.js docs/demo/dist/ohd.js`,
             ]
         })
     ]
