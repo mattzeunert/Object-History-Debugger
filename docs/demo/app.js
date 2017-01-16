@@ -53,7 +53,21 @@
                     <td id="last-change-text"></td>
                     <td id="last-change-bold"></td>
                 </tr>
+                <tr>
+                    <td>See console for results</td>
+                    <td><button onClick="message.text__history__.prettyPrintSynchronously()">Call .prettyPrintSynchronously</button></td>
+                    <td><button onClick="message.bold__history__.prettyPrintSynchronously()">Call .prettyPrintSynchronously</button></td>
+                </tr>
+                <tr>
+                    <td>See console for results</td>
+                    <td onClick="message.bold__history__.prettyPrint()"><button>Call .prettyPrint</button></td>
+                    <td onClick="message.bold__history__.prettyPrint()"><button>Call .prettyPrint</button></td>
+                </tr>
             </table>
+
+            <p>
+                TODOOOOO: explain why synchronously or not
+            </p>
         `
 
         messageObjectInfo.innerHTML = html;
