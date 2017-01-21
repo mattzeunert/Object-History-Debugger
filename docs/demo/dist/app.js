@@ -35,7 +35,7 @@
         __ohdAssign(output, "textContent", message.text);
         __ohdAssign(output.style, "fontWeight", message.bold ? "bold" : "normal");
 
-        var html = "\n            <table>\n                <tr>\n                    <th>Inspect window.message!</th>\n                    <th>message.text</th>\n                    <th>message.bold</th>\n                </tr>\n                <tr>\n                    <td>Value</td>\n                    <td>\"" + message.text + "\"</td>\n                    <td>" + message.bold + "</td>\n                </tr>\n                <tr>\n                    <td>History Length</td>\n                    <td>" + message.text__history__.fullHistory.length + "</td>\n                    <td>" + message.bold__history__.fullHistory.length + "</td>\n                </tr>\n                <tr>\n                    <td>Last change location</td>\n                    <td>" + fileNameOnly(message.text__history__.fullHistory[0].stack[0]) + "</td>\n                    <td>" + fileNameOnly(message.bold__history__.fullHistory[0].stack[0]) + "</td>\n                </tr>\n                <tr>\n                    <td>Last change location<br> (asynchronous, sourcemapped)</td>\n                    <td id=\"last-change-text\"></td>\n                    <td id=\"last-change-bold\"></td>\n                </tr>\n                <tr>\n                    <td>See console for results</td>\n                    <td><button onClick=\"message.text__history__.prettyPrintSynchronously()\">Call .prettyPrintSynchronously</button></td>\n                    <td><button onClick=\"message.bold__history__.prettyPrintSynchronously()\">Call .prettyPrintSynchronously</button></td>\n                </tr>\n                <tr>\n                    <td>See console for results</td>\n                    <td onClick=\"message.bold__history__.prettyPrint()\"><button>Call .prettyPrint</button></td>\n                    <td onClick=\"message.bold__history__.prettyPrint()\"><button>Call .prettyPrint</button></td>\n                </tr>\n            </table>\n\n        ";
+        var html = "\n            <table>\n                <tr>\n                    <th style=\"width: 230px\">Inspect window.message!</th>\n                    <th style=\"width: 397px\">message.text</th>\n                    <th style=\"width: 397px\">message.bold</th>\n                </tr>\n                <tr>\n                    <td>Value</td>\n                    <td>\"" + message.text + "\"</td>\n                    <td>" + message.bold + "</td>\n                </tr>\n                <tr>\n                    <td>History Length</td>\n                    <td>" + message.text__history__.fullHistory.length + "</td>\n                    <td>" + message.bold__history__.fullHistory.length + "</td>\n                </tr>\n                <tr>\n                    <td>Last change at</td>\n                    <td>" + fileNameOnly(message.text__history__.fullHistory[0].stack[0]) + "</td>\n                    <td>" + fileNameOnly(message.bold__history__.fullHistory[0].stack[0]) + "</td>\n                </tr>\n                <tr>\n                    <td>Last change<br> (sourcemapped)</td>\n                    <td id=\"last-change-text\"></td>\n                    <td id=\"last-change-bold\"></td>\n                </tr>\n                <tr>\n                    <td>See console for results</td>\n                    <td><button onClick=\"message.text__history__.prettyPrintSynchronously()\">Call .prettyPrintSynchronously</button></td>\n                    <td><button onClick=\"message.bold__history__.prettyPrintSynchronously()\">Call .prettyPrintSynchronously</button></td>\n                </tr>\n                <tr>\n                    <td>See console for results</td>\n                    <td onClick=\"message.bold__history__.prettyPrint()\"><button>Call .prettyPrint</button></td>\n                    <td onClick=\"message.bold__history__.prettyPrint()\"><button>Call .prettyPrint</button></td>\n                </tr>\n            </table>\n\n        ";
 
         __ohdAssign(messageObjectInfo, "innerHTML", html);
 
@@ -43,8 +43,9 @@
         updateLastLocationSourcemapped(message.bold__history__, "#last-change-bold");
 
         function updateLastLocationSourcemapped(history, selector) {
+            var outputEl = document.querySelector(selector);
             if (isMobile || !isChrome && !isFirefox) {
-                __ohdAssign(document.querySelector(selector), "innerHTML", "Currently Desktop Firefox/Chrome-only");
+                __ohdAssign(outputEl, "innerHTML", "Currently Desktop Firefox/Chrome-only");
                 return;
             }
 
@@ -52,7 +53,15 @@
             codePreprocessor.resolveFrame(history.fullHistory[0].stack[0], function (err, frame) {
                 // artificial delay to show it's asynchronous
                 setTimeout(function () {
-                    __ohdAssign(document.querySelector(selector), "textContent", fileNameOnly(frame.fileName) + ":" + frame.lineNumber + ":" + frame.columnNumber);
+                    var location = fileNameOnly(frame.fileName) + ":" + frame.lineNumber + ":" + frame.columnNumber;
+                    var locationEl = document.createElement("div");
+                    __ohdAssign(locationEl, "textContent", location);
+                    var codeEl = document.createElement("code");
+                    __ohdAssign(codeEl, "textContent", frame.line);
+
+                    __ohdAssign(outputEl, "innerHTML", "");
+                    outputEl.appendChild(locationEl);
+                    outputEl.appendChild(codeEl);
                 }, 200);
             });
         }

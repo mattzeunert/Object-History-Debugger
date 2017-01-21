@@ -36,9 +36,9 @@
         var html = `
             <table>
                 <tr>
-                    <th>Inspect window.message!</th>
-                    <th>message.text</th>
-                    <th>message.bold</th>
+                    <th style="width: 230px">Inspect window.message!</th>
+                    <th style="width: 397px">message.text</th>
+                    <th style="width: 397px">message.bold</th>
                 </tr>
                 <tr>
                     <td>Value</td>
@@ -51,12 +51,12 @@
                     <td>${message.bold__history__.fullHistory.length}</td>
                 </tr>
                 <tr>
-                    <td>Last change location</td>
+                    <td>Last change at</td>
                     <td>${fileNameOnly(message.text__history__.fullHistory[0].stack[0])}</td>
                     <td>${fileNameOnly(message.bold__history__.fullHistory[0].stack[0])}</td>
                 </tr>
                 <tr>
-                    <td>Last change location<br> (asynchronous, sourcemapped)</td>
+                    <td>Last change<br> (sourcemapped)</td>
                     <td id="last-change-text"></td>
                     <td id="last-change-bold"></td>
                 </tr>
@@ -80,8 +80,9 @@
         updateLastLocationSourcemapped(message.bold__history__, "#last-change-bold")
 
         function updateLastLocationSourcemapped(history, selector){
+            var outputEl = document.querySelector(selector);
             if (isMobile || (!isChrome && !isFirefox)) {
-                document.querySelector(selector).innerHTML = "Currently Desktop Firefox/Chrome-only"
+                outputEl.innerHTML = "Currently Desktop Firefox/Chrome-only"
                 return;
             }
 
@@ -89,7 +90,15 @@
             codePreprocessor.resolveFrame(history.fullHistory[0].stack[0], function(err, frame){
                 // artificial delay to show it's asynchronous
                 setTimeout(function(){
-                    document.querySelector(selector).textContent = fileNameOnly(frame.fileName) + ":" + frame.lineNumber + ":" + frame.columnNumber
+                    var location = fileNameOnly(frame.fileName) + ":" + frame.lineNumber + ":" + frame.columnNumber;
+                    var locationEl = document.createElement("div")
+                    locationEl.textContent = location;
+                    var codeEl = document.createElement("code")
+                    codeEl.textContent = frame.line
+
+                    outputEl.innerHTML = ""
+                    outputEl.appendChild(locationEl)
+                    outputEl.appendChild(codeEl)
                 }, 200)
             })
         }

@@ -9,6 +9,9 @@ function getBaseConfig(){
             library: "objectHistoryDebugger",
             libraryTarget: "umd"
         },
+        // We don't want to process our own code with the babel plugin,
+        // so include it as a string
+        devtool: "eval",
         module: {
             loaders: [
                 {
