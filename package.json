@@ -8,7 +8,8 @@
     "unit-test": "karma start --single-run",
     "babel-plugin-dist-test": "bash ./src/babel-plugin-dist-test/test-babel-plugin-dist.sh",
     "demo": "echo \"####### Make sure Webpack is also running!\";cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch --source-maps",
-    "webpack": "webpack --watch"
+    "webpack": "webpack --watch",
+    "webpack-single-run": "webpack"
   },
   "repository": {
     "type": "git",

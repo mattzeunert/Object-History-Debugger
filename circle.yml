@@ -1,3 +1,3 @@
 dependencies:
     post:
-        - ./node_modules/bin/webpack
+        - npm run webpack-single-run
