@@ -1,3 +1,4 @@
 node_modules
 /dist/
 /ohd-extension.zip
+/src/babel-plugin-dist-test/dist

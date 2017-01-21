@@ -8,7 +8,6 @@ module.exports = {
         library: "objectHistoryDebugger",
         libraryTarget: "umd"
     },
-    devtool: "eval",
     module: {
         loaders: [
             {
@@ -26,3 +25,10 @@ module.exports = {
         })
     ]
 };
+
+
+module.exports.externals = {
+    "babel-core": "commonjs babel-core",
+    "babylon": "commonjs babylon"
+}
+module.exports.node.global = false;
