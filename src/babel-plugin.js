@@ -1,3 +1,9 @@
+//////////////////////////////////////////
+//
+// ONLY EDIT babel-plugin.js at ./src/babel-plugin.js, not ./babel-plugin.js!
+//
+//////////////////////////////////////////
+
 var plugin = function(babel) {
     return {
         visitor: {

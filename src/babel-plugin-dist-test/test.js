@@ -1,6 +1,6 @@
 var ohd = require("object-history-debugger")
 
-describe("", function(){
+describe("Object History Debugger NPM Module", function(){
     it("Tracks assignments", function(){
         var obj = {x: 10}
         obj.x = 44

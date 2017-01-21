@@ -2,7 +2,7 @@ var WebpackShellPlugin = require("webpack-shell-plugin")
 
 function getBaseConfig(){
     return {
-        entry: "./ohd-with-babel.js",
+        entry: "./src/ohd-with-babel.js",
         output: {
             path: "./dist/",
             filename: "ohd.js",

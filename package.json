@@ -1,6 +1,6 @@
 {
   "name": "object-history-debugger",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "See where the properties of an object were assigned and what their past values were.",
   "main": "dist/ohd.js",
   "scripts": {
@@ -9,7 +9,9 @@
     "babel-plugin-dist-test": "bash ./src/babel-plugin-dist-test/test-babel-plugin-dist.sh",
     "demo": "echo \"####### Make sure Webpack is also running!\";cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch --source-maps",
     "webpack": "webpack --watch",
-    "webpack-single-run": "webpack"
+    "webpack-single-run": "webpack",
+    "predeploy": "cp ./src/babel-plugin.js ./babel-plugin.js",
+    "undo-predeploy": "rm ./babel-plugin.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
   },
   "keywords": [
     "debugging",
+    "debugger",
     "object",
     "history",
     "debugger",
@@ -38,7 +41,9 @@
     "babylon": "^6.15.0",
     "jasmine-core": "^2.5.2",
     "json-loader": "^0.5.4",
+    "karma": "^1.4.0",
     "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.1.0",
     "webpack": "^1.14.0",
     "webpack-shell-plugin": "^0.5.0"
