@@ -18,36 +18,30 @@ function getBaseConfig(){
                     test: /\.js$/,
                     exclude: /node_modules/,
                     loader: "babel"
+                },
+                {
+                    test: /\.json$/,
+                    loader: "json"
                 }
             ]
         },
-        plugins: [
-            new WebpackShellPlugin({
-                onBuildExit: [
-
-                ]
-            })
-        ]
+        node: {
+            fs: 'empty',
+            module: 'empty',
+            net: 'empty',
+        },
+        plugins: []
     }
 }
 
 var npmPluginConfig = getBaseConfig();
-npmPluginConfig.externals = {
-    "babel-core": "commonjs babel-core",
-    "babylon": "commonjs babylon"
-}
-npmPluginConfig.node = {global: false}
+npmPluginConfig.plugins.push(new WebpackShellPlugin({
+    onBuildExit: [
+        "node ./src/scripts/make-global-object-work-in-strict-mode.js"
+    ]
+}))
 
 var demoConfig = getBaseConfig();
-demoConfig.node = {
-    fs: 'empty',
-    module: 'empty',
-    net: 'empty',
-}
-demoConfig.module.loaders.push({
-    test: /\.json$/,
-    loader: "json"
-})
 demoConfig.output.path = "./docs/demo/dist"
 // The demo doesn't use `eval` or `new Function`, so we don't
 // need to load Babel, which would make our file 2MB+

@@ -12,17 +12,7 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: "babel"
-            },
-            {
-                test: /\.json$/,
-                loader: "json"
-            },
+            }
         ]
-    },
-    node: {
-            fs: 'empty',
-            module: 'empty',
-            net: 'empty',
-            global: true
-        },
+    }
 };

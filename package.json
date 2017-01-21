@@ -4,7 +4,9 @@
   "description": "See where the properties of an object were assigned and what their past values were.",
   "main": "dist/ohd.js",
   "scripts": {
-    "test": "karma start --single-run",
+    "test": "npm run unit-test;npm run babel-plugin-dist-test",
+    "unit-test": "karma start --single-run",
+    "babel-plugin-dist-test": "bash ./src/babel-plugin-dist-test/test-babel-plugin-dist.sh",
     "demo": "echo \"####### Make sure Webpack is also running!\";cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch --source-maps",
     "webpack": "webpack --watch"
   },
