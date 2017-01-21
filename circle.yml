@@ -1,0 +1,3 @@
+dependencies:
+    post:
+        - ./node_modules/bin/webpack
