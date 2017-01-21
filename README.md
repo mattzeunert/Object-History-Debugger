@@ -8,7 +8,7 @@ See where an object's property values were assigned, plus a history of past valu
 
 ![](https://cloud.githubusercontent.com/assets/1303660/21923131/377ca912-d96a-11e6-8895-d92e9b227e1d.png)
 
-## How to use
+## Getting started
 
 You can either inspect the property's history in a debugger, call `prettyPrint` on the history property.
 
