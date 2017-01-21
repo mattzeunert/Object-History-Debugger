@@ -109,6 +109,4 @@
     updateUI()
 
     console.log("This is the global message object:", message)
-
-
 })()

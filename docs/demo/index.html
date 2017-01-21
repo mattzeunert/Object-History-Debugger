@@ -92,6 +92,14 @@
             </div>
         </div>
 
+        <script>
+        window.babelNotNeeded = {}
+        Object.defineProperty(window.babelNotNeeded, "parse", {
+            get: function(){
+                console.error("Not available in demo to reduce file size")
+            }
+        })
+        </script>
         <script src="dist/ohd.js" charset="utf-8"></script>
         <script src="dist/app.js"></script>
     </body>
