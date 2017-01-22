@@ -280,12 +280,12 @@
         }
     }
 
-    // Only needed for tests I think... we can get rid of it once we have
-    // some kind of loader for Karma
-    window.objectHistoryDebugger = objectHistoryDebugger
-
     if (typeof module !== "undefined"){
         module.exports = objectHistoryDebugger;
+    } else {
+        // Only needed for tests I think... we can get rid of it once we have
+        // some kind of loader for Karma
+        window.objectHistoryDebugger = objectHistoryDebugger
     }
 
 })()
