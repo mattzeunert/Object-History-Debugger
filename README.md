@@ -2,7 +2,7 @@
 
 See where an object's property values were assigned, plus a history of past values.
 
-[Demo Page](See where an object's property values were assigned, plus a history of past values.)
+[Demo Page](http://www.mattzeunert.com/Object-History-Debugger/demo/index.html)
 
 ![](https://cloud.githubusercontent.com/assets/1303660/21923127/33283af2-d96a-11e6-96e0-df9cbb42550f.png)
 
@@ -31,7 +31,7 @@ The Chrome extension is quite hacky and some pages will break when Object Histor
 3. Put `import ohd from "object-history-debugger"` before any of your own JS code.
 4. Build your project and load it as usual. Objects now have __history__ values for each property.
 
-Pretty printing the history currently only works in Chrome.
+Pretty printing the history currently only works in Chrome, and your Babel build needs to have source maps enabled.
 
 #### Tracking only specific objects to save memory
 
