@@ -54,7 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	eval("\"use strict\";\n\nvar CodePreprocessor = __webpack_require__(1);\nvar babelPlugin = __webpack_require__(3);\nvar resolveFrameWorkerAsString = __webpack_require__(4);\nvar ohd = __webpack_require__(5);\n\nwindow.fromJSResolveFrameWorkerCode = resolveFrameWorkerAsString;\nwindow.codePreprocessor = new __odpCodePreprocessorClass({ babelPlugin: babelPlugin });\nwindow.codePreprocessor.enable();\nwindow.f__useValue = function (v) {\n  return v;\n};\n\nmodule.exports = ohd;\n\n//////////////////\n// WEBPACK FOOTER\n// ./src/ohd-with-babel.js\n// module id = 0\n// module chunks = 0\n//# sourceURL=webpack:///./src/ohd-with-babel.js?");
+	eval("\"use strict\";\n\nvar CodePreprocessor = __webpack_require__(1).CodePreprocessor.default;\nvar babelPlugin = __webpack_require__(3);\nvar resolveFrameWorkerAsString = __webpack_require__(4);\nvar ohd = __webpack_require__(5);\n\nwindow.fromJSResolveFrameWorkerCode = resolveFrameWorkerAsString;\nwindow.codePreprocessor = new CodePreprocessor({ babelPlugin: babelPlugin });\nwindow.codePreprocessor.enable();\nwindow.f__useValue = function (v) {\n  return v;\n};\n\nmodule.exports = ohd;\n\n//////////////////\n// WEBPACK FOOTER\n// ./src/ohd-with-babel.js\n// module id = 0\n// module chunks = 0\n//# sourceURL=webpack:///./src/ohd-with-babel.js?");
 
 /***/ },
 /* 1 */
