@@ -146,7 +146,7 @@
     Object.defineProperty(PropertyHistory.prototype, "clickDotsToPrettyPrint", {
         get: function(){
             this.prettyPrint()
-            return "See console, note pretty print is asynchronous"
+            return "See console, note that pretty print is asynchronous"
         },
         enumerable: true
     })
