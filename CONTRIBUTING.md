@@ -17,3 +17,5 @@ Then run a static file server in the docs/demo subfolder.
 For the Chrome extension open the src folder as an unpacked extension in Chrome.
 
 ChromeCodeInstrumenter, resolveFrameWorkerAsString, and CodePreprocessor are taken from [FromJS](https://github.com/mattzeunert/fromjs).
+
+Publishing on NPM: `npm run predeploy; npm publish`
