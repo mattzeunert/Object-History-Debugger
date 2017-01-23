@@ -1,0 +1,110 @@
+<!doctype>
+<html>
+    <head>
+        <title>Object History Debugger Demo</title>
+    </head>
+    <body>
+        <style>
+            .container {
+                max-width: 1024px;
+                margin: auto;
+            }
+            body {
+                font-family: Myriad Pro, Arial;
+            }
+            a {
+                color: #171596;
+            }
+            #output {
+                font-size: 50px;
+                margin-bottom: 0;
+            }
+            input, #btn-to-uppercase, label {
+                font-size: 16px;
+                padding: 10px;
+            }
+            button {
+
+            }
+            #btn-to-uppercase {
+                border: none;
+                background: #777;
+                color: white;
+                cursor: pointer;
+                width: 230px;
+                font-size: 14px;
+            }
+            #btn-to-uppercase:hover {
+                background: #555;
+                text-transform: uppercase;
+            }
+
+            #message-object-info table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            #message-object-info th {
+                text-align: left;
+            }
+            #message-object-info td {
+                padding: 4px;
+                line-height: 24px;
+                border: 1px solid #ddd;
+            }
+            #message-object-info td:first-child {
+                opacity: .8
+            }
+
+            code {
+                font-size: 11px;
+            }
+        </style>
+
+        <div class="container">
+            <h1 style="font-size: 16px;">
+                <a href="https://github.com/mattzeunert/Object-History-Debugger">Object History Debugger</a> Demo
+            </h1>
+            <div style="background: #aee1fa; padding: 20px;">
+                <input type="text" value="" id="txt-message"/>
+                <button style="padding-top: 12px;padding-bottom: 12px;" id="btn-to-uppercase">
+                    Convert to upper case
+                </button>
+                <label style="font-weight: bold">
+                    <input type="checkbox" id="chk-bold"></input>
+                    Bold
+                </label>
+                <h2 id="output"></h2>
+            </div>
+            <div>
+                <br>
+                <div id="message-object-info">
+                    <span style="color: red; font-size: 24px;">Loading...</span>
+                </div>
+                <h3>
+                    prettyPrint vs prettyPrintSynchronously
+                </h3>
+                <p>
+                    The Object History Debugger (OHD) modifies the page source code, so the locations captured
+                    refer to the modified source code. When calling pretty print OHD uses source maps to determine the original source location.
+                </p>
+                <p>
+                    However, determining the original location is an asynchronous action. So if you're
+                    using OHD to debug your app and you've paused execution OHD won't be able to display
+                    the source mapped location until you've resumed execution. Use prettyPrintSynchronously to
+                    be able to see the property history right away.
+                </p>
+            </div>
+        </div>
+
+        <script>
+        window.babelNotNeeded = {}
+        Object.defineProperty(window.babelNotNeeded, "parse", {
+            get: function(){
+                console.error("Not available in demo to reduce file size")
+            }
+        })
+        </script>
+        <script src="dist/ohd.js" charset="utf-8"></script>
+        <script src="dist/app.js"></script>
+    </body>
+</html>

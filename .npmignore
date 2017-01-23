@@ -1,0 +1,5 @@
+*
+*/
+!dist/ohd.js
+!babel-plugin.js
+!package.json

@@ -15,11 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './node_modules/babel-standalone/babel.js',
-      './src/ohd.js',
-      './src/ohd.spec.js',
-      './src/babel-plugin.js',
-      './src/babel-plugin.spec.js'
+      './dist/test.js',
     ],
 
 
@@ -41,7 +37,7 @@ module.exports = function(config) {
 
 
     // web server port
-    port: 9876,
+    port: 9886,
 
 
     // enable / disable colors in the output (reporters and logs)

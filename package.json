@@ -1,25 +1,52 @@
 {
   "name": "object-history-debugger",
-  "version": "1.0.0",
-  "description": "",
-  "main": "ChromeCodeInstrumenter.js",
+  "version": "0.4.2",
+  "description": "See where the properties of an object were assigned and what their past values were.",
+  "main": "dist/ohd.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run unit-test;npm run babel-plugin-dist-test",
+    "unit-test": "karma start --single-run",
+    "babel-plugin-dist-test": "bash ./src/babel-plugin-dist-test/test-babel-plugin-dist.sh",
+    "demo": "echo \"####### Make sure Webpack is also running!\";cd docs/demo;../../node_modules/.bin/babel app.js -d dist --watch --source-maps",
+    "webpack": "webpack --watch",
+    "webpack-single-run": "webpack",
+    "predeploy": "cp ./src/babel-plugin.js ./babel-plugin.js",
+    "postdeploy": "rm ./babel-plugin.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mattzeunert/object-history-debugger.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Matt Zeunert",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mattzeunert/object-history-debugger/issues"
   },
+  "keywords": [
+    "debugging",
+    "debugger",
+    "object",
+    "history",
+    "debugger",
+    "babel",
+    "dynamic analysis"
+  ],
   "homepage": "https://github.com/mattzeunert/object-history-debugger#readme",
   "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
     "babel-standalone": "^6.21.1",
+    "babylon": "^6.15.0",
     "jasmine-core": "^2.5.2",
+    "json-loader": "^0.5.4",
+    "karma": "^1.4.0",
     "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.1.0"
-  }
+    "karma-cli": "^1.0.1",
+    "karma-jasmine": "^1.1.0",
+    "webpack": "^1.14.0",
+    "webpack-shell-plugin": "^0.5.0"
+  },
+  "dependencies": {}
 }
