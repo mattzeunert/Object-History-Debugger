@@ -67,7 +67,7 @@
                 </tr>
                 <tr>
                     <td>See console for results</td>
-                    <td onClick="message.bold__history__.prettyPrint()"><button>Call .prettyPrint</button></td>
+                    <td onClick="message.text__history__.prettyPrint()"><button>Call .prettyPrint</button></td>
                     <td onClick="message.bold__history__.prettyPrint()"><button>Call .prettyPrint</button></td>
                 </tr>
             </table>
