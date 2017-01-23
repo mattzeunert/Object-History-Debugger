@@ -6,6 +6,7 @@ module.exports = {
         path: "./dist/",
         filename: "test.js"
     },
+    devtool: "inline-sourcemap",
     module: {
         loaders: [
             {

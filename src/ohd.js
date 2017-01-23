@@ -54,6 +54,8 @@
         }
         console.info("Pretty print is asynchronous, so if you're paused in the debugger you first need to continue execution.")
 
+        var args = arguments
+
         var fullHistory = this.clone().fullHistory;
         var self = this;
 
@@ -69,8 +71,12 @@
                     fullHistory[assignmentIndex].stack[frameIndex] = resolvedFrame
 
                     if (framesLeftToResolve===0){
-                        console.log("done")
                         self._log(fullHistory)
+
+                        if (typeof args[0] === "function"){
+                            // Automated tests use this to see when prettyprint is done
+                            args[0]()
+                        }
                     }
                 })
             })
