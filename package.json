@@ -1,6 +1,6 @@
 {
   "name": "object-history-debugger",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "See where the properties of an object were assigned and what their past values were.",
   "main": "dist/ohd.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "webpack": "webpack --watch",
     "webpack-single-run": "webpack",
     "predeploy": "cp ./src/babel-plugin.js ./babel-plugin.js",
-    "undo-predeploy": "rm ./babel-plugin.js"
+    "postdeploy": "rm ./babel-plugin.js"
   },
   "repository": {
     "type": "git",
