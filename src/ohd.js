@@ -282,7 +282,7 @@
         })
 
         if (object[storagePropName].fullHistory.length > 20) {
-            object[storagePropName].fullHistory = object[storagePropName].fullHistory.slice(0, 20)
+            object[storagePropName].fullHistory.shift()
         }
     }
 
