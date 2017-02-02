@@ -1,6 +1,6 @@
 {
   "name": "Object History Debugger",
-  "version": "0.2.0",
+  "version": "0.5.0",
   "manifest_version": 2,
   "description": "See where the properties of an object were assigned and what their past values were.",
   "minimum_chrome_version": "50.0",
