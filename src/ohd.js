@@ -131,21 +131,37 @@
             var parts = path.split("/")
             var fileName = parts[parts.length - 1]
             console.log("Original location:", fileName + ":" + frame.lineNumber + ":" + frame.columnNumber)
+            var line = frame.line
+            if (line.length > 200){
+                line.substr(frame.columnNumber, 200) + "..."
+            }
             if (isDetailed){
-                var previousLine = frame.prevLines[frame.prevLines.length - 1]
-                var nextLine = frame.nextLines[0]
+                var previousLine = truncate(frame.prevLines[frame.prevLines.length - 1], 200)
+                var nextLine = truncate(frame.nextLines[0], 200)
                 if (previousLine){
                     console.log("###", previousLine)
                 }
-                console.log(">>>", frame.line)
+                console.log(">>>", line)
                 if (nextLine) {
                     console.log("###", nextLine)
                 }
             } else {
-                console.log(frame.line)
+                console.log(line)
             }
         }
     }
+
+    function truncate(str, maxLength){
+        if (str === undefined) {
+            str = ""
+        }
+        if (str.length < maxLength) {
+            return str.length;
+        } else {
+            return str.substr(0, maxLength - 3) + "..."
+        }
+    }
+
     Object.defineProperty(PropertyHistory.prototype, "clickDotsToPrettyPrintSynchronously", {
         get: function(){
             this.prettyPrintSynchronously()
