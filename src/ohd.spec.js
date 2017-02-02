@@ -1,4 +1,8 @@
 describe("Object History Debugger", function(){
+    beforeEach(function(){
+        objectHistoryDebugger.trackAllObjects = true
+    })
+
     var objWithHistory = __ohdMakeObject([['ObjectProperty', 'age', 77]])
     var obj = {age: 77}
 
@@ -80,6 +84,13 @@ describe("Object History Debugger", function(){
             __ohdAssign(o2, "prop", 33)
             expect(typeof o1.prop__history__).toBe("undefined")
             expect(typeof o2.prop__history__).toBe("object")
+        })
+
+        it("Can handle keys that are undefined", function(){
+            var o = {}
+            __ohdAssign(o, undefined, 123)
+            
+            expect(o.undefined__history__).not.toBe(undefined)
         })
     })
 

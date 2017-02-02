@@ -196,7 +196,8 @@
 
     window.__ohdAssign = function(object, propertyName, value){
         if (objectHistoryDebugger._isTrackingObject(object)) {
-            var propertyNameString = propertyName.toString()
+            // concat with empty str instead of doing toString so that undefined is supported as propertyname
+            var propertyNameString = "" + propertyName
 
             var propertyNameType = typeof propertyName;
             // Either Symbol() or Object(Symbol())
@@ -247,7 +248,8 @@
     }
 
     function addToHistory(object, propertyName, value){
-        var propertyNameString = propertyName.toString();
+        // concat with empty str instead of doing toString so that undefined is supported as propertyname
+        var propertyNameString = "" + propertyName;
         var storagePropName = propertyNameString + "__history__";
 
         if (object[storagePropName] === undefined){
