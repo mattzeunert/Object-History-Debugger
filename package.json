@@ -1,6 +1,6 @@
 {
   "name": "object-history-debugger",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "See where the properties of an object were assigned and what their past values were.",
   "main": "dist/ohd.js",
   "scripts": {
