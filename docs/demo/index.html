@@ -84,11 +84,11 @@
                     prettyPrint vs prettyPrintSynchronously
                 </h3>
                 <p>
-                    The Object History Debugger (OHD) modifies the page source code, so the locations captured
+                    The Object History Debugger (OHD) modifies the JavaScript source code, so the locations captured
                     refer to the modified source code. When calling pretty print OHD uses source maps to determine the original source location.
                 </p>
                 <p>
-                    However, determining the original location is an asynchronous action. So if you're
+                    However, determining the original location is an asynchronous action. If you're
                     using OHD to debug your app and you've paused execution OHD won't be able to display
                     the source mapped location until you've resumed execution. Use prettyPrintSynchronously to
                     be able to see the property history right away.
