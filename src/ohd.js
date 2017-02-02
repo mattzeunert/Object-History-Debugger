@@ -51,7 +51,11 @@
             })
         }
     }
-    PropertyHistory.prototype.prettyPrint = function(){
+    PropertyHistory.prototype.prettyPrint = function(moreThanOneLevelDeep){
+        if (moreThanOneLevelDeep === undefined){
+            moreThanOneLevelDeep = true;
+        }
+
         if (!canPrettyPrint) {
             console.error("Pretty print only works in Chrome and Firefox")
             return;
@@ -65,8 +69,23 @@
 
         var framesLeftToResolve = 0;
 
+
+        var takingAWhileTimeout = null;
+        if (moreThanOneLevelDeep){
+            takingAWhileTimeout = setTimeout(function(){
+                console.log("This seems to be taking a while. Call obj.prop__history__.prettyPrint(false) to only show the call stack one level deep.")
+            }, 2000)
+        }
+
         fullHistory.forEach(function(assignment, assignmentIndex){
             assignment.stack.forEach(function(frameString, frameIndex){
+                if (!moreThanOneLevelDeep){
+                    if (frameIndex > 0) {
+                        return
+                    } else {
+                        fullHistory[assignmentIndex].stack =  fullHistory[assignmentIndex].stack.slice(0, 1)
+                    }
+                }
                 framesLeftToResolve++;
 
                 codePreprocessor.resolveFrame(frameString, function(err, resolvedFrame){
@@ -75,6 +94,7 @@
                     fullHistory[assignmentIndex].stack[frameIndex] = resolvedFrame
 
                     if (framesLeftToResolve===0){
+                        clearTimeout(takingAWhileTimeout)
                         self._log(fullHistory)
 
                         if (typeof args[0] === "function"){
@@ -133,7 +153,7 @@
             console.log("Original location:", fileName + ":" + frame.lineNumber + ":" + frame.columnNumber)
             var line = frame.line
             if (line.length > 200){
-                line.substr(frame.columnNumber, 200) + "..."
+                line = line.substr(frame.columnNumber, 200) + "..."
             }
             if (isDetailed){
                 var previousLine = truncate(frame.prevLines[frame.prevLines.length - 1], 200)
