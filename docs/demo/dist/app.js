@@ -15,8 +15,10 @@
     __ohdAssign(window, "message", __ohdMakeObject([["ObjectProperty", "text", "Hello World!"], ["ObjectProperty", "bold", false]]));
 
     txtMessage.addEventListener("keyup", function () {
-        __ohdAssign(message, "text", txtMessage.value);
-        updateUI();
+        if (message.text !== txtMessage.value) {
+            __ohdAssign(message, "text", txtMessage.value);
+            updateUI();
+        }
     });
 
     btnToUppercase.addEventListener("click", function () {

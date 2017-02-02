@@ -13,8 +13,10 @@
     window.message = { text: "Hello World!", bold: false };
 
     txtMessage.addEventListener("keyup", function(){
-        message.text = txtMessage.value;
-        updateUI();
+        if (message.text !== txtMessage.value){
+            message.text = txtMessage.value;
+            updateUI();
+        }
     })
 
     btnToUppercase.addEventListener("click", function(){
