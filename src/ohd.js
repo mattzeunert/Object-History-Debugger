@@ -29,6 +29,21 @@
     var isDesktopChrome = !isMobile && isChrome
     var canPrettyPrint = !isMobile && (isChrome || isFirefox)
 
+    function resolveFrameWithTimeout(frameString, callback){
+        var timedOut = false;
+        var timer = setTimeout(function(){
+            console.warn("Source mapping timed out", frameString)
+            timedOut = true;
+            callback(null, frameString)
+        }, 30000)
+        codePreprocessor.resolveFrame(frameString, function(){
+            if (!timedOut){
+                clearTimeout(timer)
+                callback.apply(this, arguments)
+            }
+        })
+    }
+
     function PropertyHistory(propertyName){
         Object.defineProperties(this, {
             propertyName: {
@@ -73,7 +88,7 @@
         var takingAWhileTimeout = null;
         if (moreThanOneLevelDeep){
             takingAWhileTimeout = setTimeout(function(){
-                console.log("This seems to be taking a while. Call obj.prop__history__.prettyPrint(false) to only show the call stack one level deep.")
+                console.log("This seems to be taking a while. Call obj.prop__history__.prettyPrint(false) to only show a single call frame.")
             }, 2000)
         }
 
@@ -88,7 +103,7 @@
                 }
                 framesLeftToResolve++;
 
-                codePreprocessor.resolveFrame(frameString, function(err, resolvedFrame){
+                resolveFrameWithTimeout(frameString, function(err, resolvedFrame){
                     framesLeftToResolve--;
 
                     fullHistory[assignmentIndex].stack[frameIndex] = resolvedFrame
