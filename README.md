@@ -28,11 +28,11 @@ If you're excluding paths from your Babel build (e.g. the `node_modules` folder)
 
 The Chrome extension is quite hacky and some pages will break when Object History Debugger is activated.
 
-## Getting started
+## Usage
 
-You can either inspect the property's history in a debugger, call `prettyPrint` on the history property.
+You can either inspect the property's history in a debugger or call `prettyPrint` on the history property.
 
-For example, if your property name is `sth` you would call `obj.sth.sth__history__.prettyPrint()`.
+For example, if your property name is `sth` you would call `obj.sth__history__.prettyPrint()`.
 
 Pretty print shows you the original source code you wrote. Because it's asynchronous it won't log the history right away if you're paused in the debugger.
 
