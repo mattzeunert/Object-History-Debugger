@@ -260,7 +260,10 @@
         var propertyNameString = propertyNameToString(propertyName);
         var storagePropName = propertyNameString + "__history__";
 
-        if (object[storagePropName] === undefined){
+        if (object[storagePropName] === undefined ||
+            // not sure why this happens, but when loading Trello there's
+            // a point where fullHistory is "[Object object]"...
+            typeof object[storagePropName].fullHistory !== "object"){
             Object.defineProperty(object, storagePropName, {
                 value: new PropertyHistory(propertyNameString),
                 enumerable: false,
