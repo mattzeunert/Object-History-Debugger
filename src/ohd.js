@@ -193,11 +193,20 @@
         return ret
     }
 
+    function propertyNameToString(propName){
+        if (propName === null) {
+            return "null"
+        }
+        if (propName === undefined) {
+            return "undefined"
+        }
+        return propName.toString()
+    }
+
 
     window.__ohdAssign = function(object, propertyName, value){
         if (objectHistoryDebugger._isTrackingObject(object)) {
-            // concat with empty str instead of doing toString so that undefined is supported as propertyname
-            var propertyNameString = "" + propertyName
+            var propertyNameString = propertyNameToString(propertyName)
 
             var propertyNameType = typeof propertyName;
             // Either Symbol() or Object(Symbol())
@@ -248,8 +257,7 @@
     }
 
     function addToHistory(object, propertyName, value){
-        // concat with empty str instead of doing toString so that undefined is supported as propertyname
-        var propertyNameString = "" + propertyName;
+        var propertyNameString = propertyNameToString(propertyName);
         var storagePropName = propertyNameString + "__history__";
 
         if (object[storagePropName] === undefined){

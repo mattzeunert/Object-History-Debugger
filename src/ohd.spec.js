@@ -92,6 +92,13 @@ describe("Object History Debugger", function(){
             
             expect(o.undefined__history__).not.toBe(undefined)
         })
+
+        it("Can handle Symbols", function(){
+            var sym = Symbol("abc")
+            var o = {}
+            __ohdAssign(o, sym, 123)
+            expect(o[sym]).toBe(123)
+        })
     })
 
 
