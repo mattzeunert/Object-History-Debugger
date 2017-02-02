@@ -6,7 +6,7 @@ fetch("ohd.js").then(r => r.text()).then(js => ohdJS = js)
 function onBrowserActionClicked(tab) {
     codeInstrumenter.toggleTabInstrumentation(tab.id, {
         babelPlugin: window.babelPlugin,
-        jsExecutionInhibitedMessage: "Object History Debugger: JavaScript Execution Inhibited (this exception is normal and expected)",
+        jsExecutionInhibitedMessage: "Object History Debugger: JavaScript Execution Inhibited (this exception is normal and expected when using the Chrome Extension)",
         loadingMessagePrefix: "Object History Debugger: ",
         onBeforePageLoad: function(callback) {
             this.executeScriptOnPage(ohdJS, () => {

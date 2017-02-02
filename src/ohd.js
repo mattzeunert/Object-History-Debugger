@@ -11,6 +11,10 @@
             })
         },
         _isTrackingObject: function(obj){
+            if (obj instanceof Storage){
+                // PropertyHistory stored on Storage will be turned into strings
+                return false;
+            }
             if (this.trackAllObjects) {
                 return true;
             }
@@ -165,8 +169,11 @@
         // We are checking stack to do that... works but possibly slow
         // and could break in future if DevTools/Chrome code changes
         var stack = Error().stack
-        var calledFromDevTools = stack.indexOf("_propertyDescriptors.next") !== -1 &&
-            stack.indexOf("InjectedScript") !== -1
+        var calledFromDevTools =
+            // console autocomplete
+            stack.indexOf("getCompletions") !== -1
+            // object inspector
+            || (stack.indexOf("_propertyDescriptors") && stack.indexOf("InjectedScript") !== -1)
 
         var names = nativeObjectGetOwnPropertyNames.apply(this, arguments)
         if (calledFromDevTools) {
@@ -260,15 +267,15 @@
         var propertyNameString = propertyNameToString(propertyName);
         var storagePropName = propertyNameString + "__history__";
 
-        if (object[storagePropName] === undefined ||
-            // not sure why this happens, but when loading Trello there's
-            // a point where fullHistory is "[Object object]"...
-            typeof object[storagePropName].fullHistory !== "object"){
+        if (object[storagePropName] === undefined){
             Object.defineProperty(object, storagePropName, {
                 value: new PropertyHistory(propertyNameString),
                 enumerable: false,
                 writable: true
             })
+        } else if (object[storagePropName].fullHistory === undefined){
+            console.warn("Not tracking assignment", object, propertyName)
+            return
         }
 
         Error.stackTraceLimit = 100
