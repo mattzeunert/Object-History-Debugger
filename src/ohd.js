@@ -261,7 +261,7 @@
         Error.stackTraceLimit = 100
         var stack = Error().stack.split("\n")
         stack = stack.filter(frameString => {
-            if (frameString === "Error") {
+            if (frameString === "Error" || frameString.indexOf("at Error (native)") !== -1) {
                 return false;
             }
             if (frameString.indexOf("__ohd") !== -1) {
