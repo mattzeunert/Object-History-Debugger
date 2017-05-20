@@ -16,7 +16,7 @@ See where an object's property values were assigned, plus a history of past valu
 2. Add `object-history-debugger/babel-plugin` to your Babel plugins, e.g. in .babelrc
 3. Put `import ohd from "object-history-debugger"` before any of your own JS code.
 4. Make sure your build has source maps enabled, if you want to use prettyPrint
-5. Build your project and load it as usual. Objects now have __history__ values for each property.
+5. Build your project and load it as usual. Objects now have `__history__` values for each property.
 
 Pretty printing the history currently only works in Chrome.
 
